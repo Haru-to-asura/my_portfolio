@@ -58,10 +58,14 @@ with st.sidebar:
     st.write("🐙 GitHub Link") # 깃허브 링크 추가
     
     st.write("---")
-    # API 키 입력받기
-    api_key = st.text_input("OpenAI API Key", type="password", help="봇을 사용하려면 API 키가 필요합니다.")
-    if api_key:
-        st.success("API 키가 입력되었습니다!")
+    # API 키 처리 (자동 감지)
+    if "OPENAI_API_KEY" in st.secrets:
+        api_key = st.secrets["OPENAI_API_KEY"]
+    else:
+        api_key = st.text_input("OpenAI API Key", type="password")
+        
+    if not api_key:
+        st.info("⚠️ 챗봇을 사용하려면 API 키가 필요합니다.")
 
 # 4. 메인 화면 구성 (탭 방식)
 st.title("안녕하세요! 로봇 공학도 김민석입니다 🤖")
